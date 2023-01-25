@@ -1,0 +1,413 @@
+OOPS:
+
+class - a blueprint of objects. it's also called a user defined datatype.
+
+format of a creating objects of a class:
+
+class student{
+   public: // now we have to mention this as public coz by default
+              it takes into consideration the private access specifier.
+   int age;
+   int roll;
+};
+
+int main(){
+   // this is creating objects statically
+   student s1;
+   student s2;
+
+   s1.age= 20;
+   s1.roll= 205209;
+
+   //this is creating objects dynamically
+   student *s3= new student;
+
+   //for us to access the class parameters we have to use a
+     a dereferencing parameter that is pointer like:
+
+   (*s1).age= 20; 
+   // or simply we can write:
+   s1->age = 20;
+********************************************************************
+
+Access modifiers in oops: ( who can access the proprties in a class)
+
+1. private: you can access the properties only inside the class.
+2. public: you can access the properties from outside the class.
+3. protected: 
+
+# now how can we access a private property from outside a class?
+
+- with the help of a function like:
+
+class student{
+    private:
+    int age;
+
+    public:
+    int getage(){
+        return age;
+};
+
+int main()
+{
+   cout<<"s1 age"<<s1.getage()<<endl;
+}
+
+********************************************************************
+There's this important concept in software development called
+"ISOLATION OF LOGIC"
+
+This says whenever you create a file create it in a file and
+use it in another file.
+In order to use that file in our current file we have to link the 
+two files by:
+#include "name of the class file" 
+
+(note : we use include <> for already built in classes but in order
+ to use classes that we have created we have to use include "")
+
+********************************************************************
+Constructotrs:
+
+when we write student s1; we get a roll age and some garbage values
+
+internally it gets interpreted as s1.student();
+and in case we create an object dynamically, internally it gets 
+interpreted as s1->student(); or (*s1).student();
+
+we can see student() is a function and s1 object is calling that 
+function. But this function name is same as the class name. So this
+function is called constructor.
+Purpose of a constructor: it will initialize the properties or 
+data members with some garbage values.
+
+Contructor function has some special properties:
+1. it has the same name as that of the class.
+2. this function has no return type
+3.has no input argument.
+
+~This are the properties of a default constructor.
+
+when we write student s1;
+it gets analyzed internally as s1.student()l;
+
+so, as soon as we create a class, a constructor is created and this
+is called default constructor.
+
+********************************************************************
+Now let's see how the inbuilt/default constructor looks like:
+
+student(){
+
+}
+
+now as soon as we create an object, this constructor gets called.
+(either static or dynamic)
+with the creation of every object the constructor gets cdalled.
+
+the constructor then initializes the object with garbage values.
+
+********************************************************************
+now as soon as we create our own constructor, the default
+constructor is no more there.
+so, now when we create an object, the constructor we created
+is gonna get called. our constructor will do the same work.
+, i.e. initialize the data members with garbage values.
+
+********************************************************************
+parameterised constructor
+
+student(int r){
+   cout<<"constructor2 called"<<endl;
+   roll=r;
+}
+
+now when does this get called?
+
+when we create an object with no parameters, the dafault constructor
+gets called and when we create an object with one parameter, 
+the parameterised constructor gets called.
+for example:
+
+when we create an object like
+student s1; // this calls the default constructor.
+
+but if we create an object like:
+
+student s1(10); // this calls the parameterised constructor.
+
+for one object, only one constructor will be called in the time
+of creation of the object.
+
+********************************************************************
+Now here's a concept:
+
+//parameterised constructor
+
+    student(int r){
+        cout<<"constructor2 called"<<endl;
+        roll=r;
+    }
+    
+    int roll;
+
+//another parameterised constructor
+
+    student(int a, int r){
+        cout<<"Constructor 3 called"<<endl;
+        age=a;
+        roll=r;
+
+
+(now if we create an object with only one parameter, constructor2
+is called, and if we create an object with two parameters, then
+constructor 3 is called)
+
+for example:
+
+1. student s4(10);
+    s4.display(); // in this case constructor 2 gets called.
+
+2.   student s6(10, 100);
+    s6.display(); // in this case constructor 3 gets called.
+
+********************************************************************
+       
+This keyword:
+
+This holds the address of the current object.
+we know pointers hold memory addresses. This also holds address
+so, This keyword is a pointer variable.
+
+Every function of a class has access to This keyword.
+
+Now let's see its application:
+
+what will happen if we pass the parameter inside the constructor
+same as that of the property name? as:
+
+class student{
+   int roll;
+
+    student(int roll){
+        cout<<"constructor2 called"<<endl;
+        roll=roll;
+    }
+
+in this case, first roll is the parameterised roll number, that is 
+the one inside the constructor.
+what about the second one?
+by law the closest one is taken into consideration.
+as the parameterise constructor is close than that of the property 
+roll, so the parameterised roll number is taken into consideration.
+so actually this line means nothing. (it means as if 1=1)
+
+so what should we do in order to make this line work?
+here comes the roll of the This keyword.
+
+Now how the This keyword works?
+
+This keyword calls the constructor.
+
+suppose we create an object s(10);
+so, i will get an age and a roll number and suppose the address 
+of the memory location is 700.
+now the student function has the This keyword already
+so, This will get the address and thus contains 700 and then returns
+the value stored in the address.
+
+Code for better understanding:
+
+class student{
+    student(int a, int r){
+        cout<<"This "<<this<<endl;
+        age=a;
+        roll=r;
+}
+
+int main(){
+
+   student s1(10,100);
+   cout<<"address of s1"<< &s1<<endl;
+}
+
+now as an output we will see:
+
+this 0x6dfee8 // (address, which may be anything)
+address of s1 0x6dfee8
+
+(this proves that This keyword stores the address)
+
+so how to deal with the above problem?
+
+class student{
+   int roll;
+
+    student(int roll){
+        cout<<"constructor2 called"<<endl;
+        this->roll=roll;
+    }
+
+one more explanation:
+
+this keyword stores the address of the memory which contains the
+garbage value of age and roll. so when we write this->roll=roll
+this means the value we pass in the (second) roll will get stored in
+the (first) roll which alreadyt has the address where we want to 
+store the value.
+
+********************************************************************
+now we want to add a constraint, i.e. the property age should not
+contain any garbage value
+how can we do that?
+
+we will write a parameterised constructor like:
+
+student(int a){
+   age=a;
+}
+
+as soon as we create a parameterised constructor, the inbuilt 
+constructor will get erased. so in order to create an object of
+student class, the user has to give an integer argument as the 
+parameterised constructor has one parameter inside its parenthesis.
+so there is no scope for default values.
+
+********************************************************************
+as soon as we create our class, we get few functions for free:
+
+1. default constructor
+2. copy constructor
+3. copy assignment operator
+4. destructor
+
+********************************************************************
+Copy constructor:
+
+it creates an object which is the copy of another object.
+
+application: copy one object into another
+
+example: (for static objects)
+
+student s1(10,100); // in this case the parameterised constructor
+                       will get called
+student s2(s1); // in this case the copy constructor will get called
+                   and will copy the object s1 into s2. 
+
+this line will internally get operated as:
+s2.student(s1); 
+
+here, s1 is a parameter of type student.
+now we haven't created any constructor of type student that takes
+one argument. but this statement still works. how?
+
+this is because as soon as wqe create a class a copy constructorm is 
+also created. 
+so the effect of these two lines:
+for s1, age=10,roll=100
+for s2, age=10, roll=100.
+
+since copy constructor is a constructor, it will only get called
+in the time of creation of the object.
+
+example: (for dynamic objects)
+
+student *s3= new student(20,200);
+student s4(*s3); // static copy // s4 is static and s4 is dynamic
+student *s5= new student(*s3) // both s3 and s5 are dynamic
+
+********************************************************************
+Copy assignment operator:
+
+used for the same purpose, that is to copy an object into another, 
+when an object is already created. the copy operator is called at 
+the time object creation only.
+so in order to copy an object when the object has already 
+been created, we use the copy assignment operator.
+
+for example:
+
+student s1(10,100);
+student s2(20,200); // we want to copy s1 into s2. the object s2 has
+                       alerady been created. so here, we have to 
+                       use the copy assignment operator here.
+
+s2=s1; // this line will copy all values of s1 into s2.
+
+so, the difference between copy constructor and copy 
+assignment constructor is:
+
+copy constructor creates the copy of an object at the
+time of creation of the object and the copy assgnment operator
+is used when the object has already been created. 
+
+********************************************************************
+Destructor:
+
+it deallocates the memory of an object.
+
+it has some properties:
+1. same name as the class name.
+2. no return type
+3. no input arguments
+
+so how to differentiate a destructor from a default constructor?
+
+we use a sign ~
+
+example:
+
+~student(){
+
+}
+
+derstructor is automatically created when we create a class.
+it is callled only when the scope of the object is finished.
+that is both the constructor and destructed are called only once
+during the lifetime of an object.
+
+there can be many constructors in a class. if we create our own 
+constructor, the default constructor gets erased. but there can be
+only one destructor in a class. similarly if we create our own 
+destructor, the inbuilt destructor gets erased.
+
+********************************************************************
+
+an important concept:
+
+let's write a set of codes
+
+class student{
+   (constructor and destructor are called for the three objects)
+}
+
+int main(){
+   student s1(10,100);
+   student s2(20,200);
+   student *s3= new student(30,300);
+
+   s2= s1;
+   *s3= s1;
+   s2= *s3;
+}
+
+now if we run the program, we will observe that the constructor runs
+three times for the three objects but the destructor runs for two
+times. why is that?
+
+s1 and s2 are static objects and therefore they get destroted by the
+destructor. but on the other hand, s3 is a dynamic object and s3
+points to a location where the values are stored. so the destructor
+can't destroy the object s3. we have to use a keyword delete to
+destroy s3 like:
+destroy s3; 
+********************************************************************
+
+
+
+
+
+
+

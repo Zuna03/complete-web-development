@@ -1,0 +1,37 @@
+body{
+  background-image: url("images/tables.png");
+  background-size: cover;
+  font-family: sans-serif;
+  text-align: center;
+
+}
+h1{
+  color: goldenrod;
+  font-weight: bolder;
+  font-size: 4rem;
+}
+
+.heading{
+  font-style: italic;
+}
+
+p{
+  color: white;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+button{
+  background: goldenrod;
+  width: 150px;
+  color: #016f32;
+  font-weight: bolder;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border:none;
+  border-radius: 2px;
+  font-size: 1.25rem;
+  margin-right: 10px;
+  margin-left: 10px;
+
+}

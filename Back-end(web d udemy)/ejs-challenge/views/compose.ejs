@@ -1,0 +1,31 @@
+<%- include("partials/header") -%>
+<h1>Compose</h1>
+<form class="" action="/compose" method="post">
+
+  <!-- My approach -->
+
+  <!-- <div class="box">
+    <h3>Title</h3>
+    <input type="text" name="newItem" style="width:100%" >
+    <div class="">
+      <h3 style="margin-top:2%">Post</h3>
+      <textarea name="Title" rows="6" cols="80" style="width:100%;margin-bottom:2%"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" name="button">Publish</button>
+  </div> -->
+
+
+
+<!-- course approach -->
+
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" class="form-control" name="newItem"  >
+    <label>Post</label>
+    <textarea name="postBody" rows="5" cols="30" class="form-control" ></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary" name="button">Publish</button>
+
+</form>
+
+<%- include("partials/footer") -%>

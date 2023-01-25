@@ -1,0 +1,341 @@
+The Document Object Model(DOM): (Basics)
+
+If we want our website to be interactive, then we need to be able to 
+change the parts of the website on the fly.
+When a user clicks on a button, we need to resond to that by
+changing the content or appearance of the website.
+
+The DOM catalogues the webpage into individual objects that we can
+select and manipulate.
+It turns each of the elements and its associative data into a tree
+structure into a tree structure with a whole bunch of objects that we 
+can select and manipulate. For eg:
+
+   document
+      |
+     html
+    /    \
+ head    body
+  |       |
+title    button
+
+***********************************************************************
+html file:
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>My Website</title>
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+  <body>
+
+    <h1>Hello</h1>
+
+    <input type="checkbox">
+
+    <button style=":active color:red;">Click Me</button>
+
+    <ul>
+      <li class="list">
+        <a href="https://www.google.com">Google</a>
+      </li>
+      <li class="list">Second</li>
+      <li class="list">Third</li>
+    </ul>
+
+  </body>
+</html>
+
+***********************************************************************
+Open chrome developer tools:
+write in console:
+
+document;
+this will give us the entire html file
+
+document.firstElementChild;
+this gives everything that's inside the html
+
+document.firstElementChild.firstElementChild;
+this gives the head of the html file
+
+document.firstElementChild.lastElementChild;
+this gives the body of the html file
+
+now what if we have to select the <h1> tag in the file?
+document.firstElementChild.lastElementChild.firstElementChild;
+
+now we can save this in a variable like:
+
+var header= document.firstElementChild.lastElementChild.firstElementChild;
+
+now if we write abc;
+it shows the <h1>
+
+if we want to change "Hello" to "Goodbye":
+header.innerHTML= "Goodbye";
+
+if we want to change the color:
+header.style.color= "red";
+
+we can also select elements and make it do things:
+
+if we want to select the checkbox and select it:
+document.querySelector("input").click();
+
+-> querySelector searches in the html file the word we write as 
+the string. as we write "input", it will search the input
+that is the checkbox.
+click() is a method that selects the checkbox.
+
+***********************************************************************
+So we can see objects inside the DOM can have 
+
+1. properties: describe something about the object. 
+2. methods: the things that the object can do.
+
+we can use javascript to manipulate the objects using the 
+dot(.) notation.
+
+***********************************************************************
+example: (properties)
+
+if we write car.color; // it returns the color of the car
+
+so it is a get property that is it is a getter.
+
+if we write car.number of doors= 0; // suppose we change it to 0
+then we assign/set something to the property of the car
+
+so, it is a setter property or it is called a setter.
+
+example:(methods)
+
+if we write car.drive();
+then our car will do something, that is it will start driving.
+this is a method.
+
+
+***********************************************************************
+Ways of selecting elements in the DOM:
+
+1. document.getElementsByTagName("") -> used to search any element by
+                                        the tag name. The word elements
+is plural here. That means it will fetch all the elements with the
+particular tag name. If we want to change the color of 
+the 3rd list item to purple:
+
+document.getElementsByTagName("li")[2].style.color= "purple";
+
+if we want to know how many elements are there with the "li" tagname:
+
+document.getElementsByTagName("li").length;
+
+
+
+
+2. document.getElementsByClassName(" ") -> used to search any element by
+                                          the class name. even if we 
+have only one class by that name, we have to add [0] to get the result.
+
+
+
+
+3. document.getElementByIdName(" ") -> The word element is no longer
+                                      plural. So we get back one item.
+So, in a single webpage, each id should be unique.
+
+if we want to change the text that has id = "title" to "Goodbye":
+
+document.getElementByIdName("title").innerHTML= "Goodbye";
+ 
+
+
+4. querySelector(" ") -> returns a single item.
+                         we can either select a class, or id or etc.
+The string that we put inside the parenthesis is a selector. Now what
+ are selectors?
+
+for eg in css:
+
+body{
+   color: red;
+}
+
+here, body is a selector.
+
+if we want to select <h1>
+
+document.querySelector("h1");
+
+if we want to select an id named "title"
+
+document.querySelector("#title");
+
+if we want to select a button
+
+document.querySelector(".btn");
+
+
+query.Selector can also be used for hierarchy selection
+for example:
+
+(code):
+
+<ul id= "list">
+      <li class="item"><a href="https://www.google.com">Google</a></li>
+      <li class="item">Second</li>
+      <li class="item">Third</li>
+</ul>
+
+we want to select the <a> inside the first <li>
+then:
+
+document.querySelector("li a"); //there should be a gap in between
+
+
+now we can also combine our selectors like:
+if we want to select a class of items that is also a <li> element
+
+document.querySelectors("li.item"); //there should be no gap in between
+
+
+Q. Now what if our selector more than one object?
+   For eg: class "item" which is also an <li>
+
+-> we will get only the first element. in order to get all the elements
+   we have to use a method document.querySelectorsAll("li.item");
+
+***********************************************************************
+Every CSS property can be changed using javascript, but the property
+names are different.
+In javascript, naming conventions are camel-cased, i.e. the first word
+is small cased and the first letter of the adjacent word is capital.
+
+For example font-size in CSS is fontSize in javascript.
+The other thing to be noticed is that the value to be set have to be
+represented in string.
+
+For eg, if we want to add a padding of 30px to a <h1>:
+
+-> document.querySelector("h1").style.padding= "30px";
+
+if we want to change the background color of a <h1>:
+
+document.querySelector("h1").style.backgroundColor= "yellow";
+
+***********************************************************************
+A classList is a property of every DOM object. for eg: if we query for
+a button and we tap into its classList, then it gives us the list of
+the classes that are attached to the element we found.
+
+1. document.querySelector("button").classList.add("invisible");
+
+->this adds a class "invisible" to the list of classes of the button.
+so, we can now go to the style sheet in css and can create a diff
+style for the class "invisible" by .invisible{ .... }
+ 
+
+2. document.querySelector("button").classList.remove("invisible");
+
+->this is used to remove the class.
+
+
+3. document.querySelector("button").classList.toggle("invisible");
+
+if there is no class added, it it adds the class and if the the class
+is already added, it removes it.
+
+***********************************************************************
+
+Uptill now we have seen we have to use .innerHTML to change the text
+of the inner html element
+now, we can also use .textContent
+it's somewhat different from .innerHTML
+
+let's understand this with example:
+
+<h1> 
+   <strong> Hello </strong>
+</h1>
+
+
+now, if we write:
+
+1. document.querySelector("h1").innerHTML;
+
+-> it will show : <strong>Hello</strong>
+
+2. document.querySelector("h1").textContent;
+
+-> it will show: Hello
+
+***********************************************************************
+How can we manipulate the attributes of a html code using js?
+
+first of all what are attributes?
+-> all the orange colored elements in atom. everything that goes inside
+the tag other than the tag name itself is the attribute.
+
+we can get a list of attributes that are attached to the element by:
+(suppose we want the attributes of an anchor tag)
+
+document.querySelector("a").attribute;
+
+we can retrieve what the attribute is pointing towards.
+for example an anchor tag, i.e. <a> is pointing towards https//www.
+google.com
+
+html code: <a href="https//www.google.com"> Google </a>
+(here, href is the attribute)
+
+if we write: document.querySelector("a").getAttribute("href");
+it will show: "https//www.google.com"
+
+now, if we want to change the attribute, it requires 2 parameters, 
+that is two inputs: 
+
+1. which attribute you want to change?
+2. what do you want to change it to?
+(both separated by comma)
+
+so we have to write: 
+document.querySelector("a").setAttribute("href","www.yahoo.com"); 
+
+***********************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
